@@ -8,7 +8,7 @@
 <body class="text-center">
     <div>
         <h1 class="h3 mb-3 font-weight-normal">Welcome!</h1>
-        <form class="form-signin" name="authForm" action="login" method="POST" style="margin-top: 20px">
+        <form class="form-signin" name="authForm" action="testSystem" method="POST">
             <input type="hidden" name="command" value="login" />
             Username <input class="form-control" name="username" type="text"/>
             <br/>

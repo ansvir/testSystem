@@ -1,6 +1,7 @@
 package dao;
 
 import database.ConnectorDB;
+import entity.Role;
 import entity.User;
 import org.apache.log4j.Logger;
 
@@ -8,14 +9,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
+public class UserDAO implements Dao<User>{
 
     private final static Logger log = Logger.getLogger(UserDAO.class);
 
     private final static String SQL_GET_ALL_USERS = "SELECT * FROM users";
     private final static String SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
     private final static String SQL_GET_USER_BY_USERNAME = "SELECT * FROM users WHERE username LIKE ?";
-    private final static String SQL_INSERT_USER = "INSERT INTO users (role, username, password) VALUES (?, ?, ?)";
+    private final static String SQL_INSERT_USER = "INSERT INTO users (role_id, username, password) VALUES (?, ?, ?)";
     private final static String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
 
     private ConnectorDB connector;
@@ -41,7 +42,7 @@ public class UserDAO {
             while (resultSet.next()) {
                 User user = new User(
                         resultSet.getLong("id"),
-                        resultSet.getString("role"),
+                        resultSet.getLong("role_id"),
                         resultSet.getString("username"),
                         resultSet.getString("password")
                 );
@@ -72,7 +73,7 @@ public class UserDAO {
             if (resultSet != null) {
                 user = new User(
                         resultSet.getLong("id"),
-                        resultSet.getString("role"),
+                        resultSet.getLong("role_id"),
                         resultSet.getString("username"),
                         resultSet.getString("password")
                 );
@@ -89,7 +90,7 @@ public class UserDAO {
         return user;
     }
 
-    public User findByUsername(String username) {
+    public User findByName(String username) {
         log.debug("Enter " + new Object() {}
                 .getClass()
                 .getEnclosingMethod()
@@ -108,7 +109,7 @@ public class UserDAO {
                 while (resultSet.next()) {
                     user = new User(
                             resultSet.getLong("id"),
-                            resultSet.getString("role"),
+                            resultSet.getLong("role_id"),
                             resultSet.getString("username"),
                             resultSet.getString("password")
                     );
@@ -125,4 +126,44 @@ public class UserDAO {
         }
         return user;
     }
+
+    public boolean update(User user) {
+        return false;
+    }
+
+    public boolean save(User user) {
+        log.debug("Enter " + new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName());
+        try {
+            connection = connector.getConnection();
+            if (connection == null) {
+                log.debug("connection null");
+            }
+            preparedStatement = connection.prepareStatement(SQL_INSERT_USER);
+            preparedStatement.setLong(1, user.getRoleId());
+            preparedStatement.setString(2, user.getUsername());
+            preparedStatement.setString(3, user.getPassword());
+            int rowsAffected =
+                    preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                log.debug("User was saved");
+                return true;
+            } else {
+                log.warn("User wasn't saved");
+            }
+        } catch (SQLException e) {
+            log.error("SQL exception (request or table failed): ", e);
+        } finally {
+            connector.closeStatement(preparedStatement);
+            connector.closeConnection();
+        }
+        return false;
+    }
+
+    public boolean delete(User user) {
+        return false;
+    }
+
 }

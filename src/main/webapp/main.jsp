@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="date" class="java.util.Date"/>
 <head>
     <title>Test system: main</title>
@@ -18,27 +19,24 @@
         </div>
     </nav>
     <div style="margin-top:150px">
-        <form name="menu" action="login" method="POST">
-            <input type="hidden" name="command" value="login"/>
+        <form name="menu" action="testSystem" method="GET">
+            <input type="hidden" name="command" value="choose_action"/>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5 text-center">
-                        <h1 class="h2">Hello, ${requestScope.username}</h1>
+                        <h1 class="h2">Hello, ${sessionScope.username}</h1>
                     </div>
                     <div class="col-lg-7">
-                        <div>
-                            <button class="btn btn-primary btn-block">Dejstvie</button>
-                            <button class="btn btn-primary btn-block">Dejstvie</button>
-                            <button class="btn btn-primary btn-block">Dejstvie</button>
-                        </div>
+                        <c:forEach items="${sessionScope.currentPermissions}" var="item">
+                            <div>
+                                <button class="btn btn-primary btn-block" name="actionId" value="${item.id}">${item.name}</button>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
-            <%--            <c:if test="${not empty requestScope.currentRole}">--%>
-            <%--                <c:choose>--%>
-            <%--                    <c:when test="${requestScope.currentRole}"></c:when>--%>
-            <%--                </c:choose>--%>
-            <%--            </c:if>--%>
+        </form>
+        <div class="text-center">${requestScope.msg}</div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

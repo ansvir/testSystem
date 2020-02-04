@@ -3,13 +3,19 @@ package entity;
 public class User {
 
     private Long id;
-    private String role;
+    private Long roleId;
     private String username;
     private String password;
 
-    public User(Long id, String role, String username, String password) {
+    public User(Long id, Long roleId, String username, String password) {
         this.id = id;
-        this.role = role;
+        this.roleId = roleId;
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(Long roleId, String username, String password) {
+        this.roleId = roleId;
         this.username = username;
         this.password = password;
     }
@@ -22,12 +28,12 @@ public class User {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public String getUsername() {
@@ -49,8 +55,8 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id='" + id + '\'' +
-                "role='" + role + '\'' +
+                "id=" + id +
+                ", roleId=" + roleId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';

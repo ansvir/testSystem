@@ -21,6 +21,11 @@ public enum CommandEnum {
         {
             this.command = new DeleteUserCommand();
         }
+    },
+    CHOOSE_ACTION {
+        {
+            this.command = new ChooseActionCommand();
+        }
     };
 
     Command command;
