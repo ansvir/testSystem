@@ -3,15 +3,15 @@ package dao;
 import java.util.List;
 
 public interface Dao<T> {
-    public List<T> findAll();
+    List<T> findAll();
 
-    public T findById(Long id);
+    T findById(Long id);
 
-    public T findByName(String name);
+    T findByName(String name);
 
-    public boolean update(T t);
+    boolean update(T t);
 
-    public boolean save(T t);
+    boolean save(T t);
 
-    public boolean delete(T t);
+    boolean delete(T t);
 }

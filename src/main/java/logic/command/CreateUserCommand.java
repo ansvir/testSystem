@@ -28,7 +28,7 @@ public class CreateUserCommand implements Command {
         String password = request.getParameter("createUserPassword");
         User user = new User(new RoleDAO().findById(roleId).getId(), username, password);
         if (CreateUserLogic.createUser(user)) {
-            request.setAttribute("msg", MessageManager.getProperty("message.usercreatedsuccessful"));
+            request.setAttribute("msg", MessageManager.getProperty("message.usercreatedsuccessfully"));
         } else {
             log.debug("user wasn't created");
             request.setAttribute("msg", MessageManager.getProperty("message.errorcreateuser"));

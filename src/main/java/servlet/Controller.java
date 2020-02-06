@@ -1,6 +1,7 @@
 package servlet;
 
 import dao.RoleDAO;
+import dao.UserDAO;
 import factory.ActionFactory;
 import logic.command.Command;
 import org.apache.log4j.Logger;
@@ -35,6 +36,7 @@ public class Controller extends HttpServlet {
         log.debug("Enter Controller processRequest method");
         HttpSession session = request.getSession();
         session.setAttribute("roles", new RoleDAO().findAll());
+        session.setAttribute("users", new UserDAO().findAll());
         String page;
         ActionFactory client = new ActionFactory();
         Command command = client.defineCommand(request);

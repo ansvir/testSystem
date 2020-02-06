@@ -71,12 +71,14 @@ public class UserDAO implements Dao<User>{
             ResultSet resultSet =
                     preparedStatement.executeQuery();
             if (resultSet != null) {
-                user = new User(
-                        resultSet.getLong("id"),
-                        resultSet.getLong("role_id"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password")
-                );
+                while (resultSet.next()) {
+                    user = new User(
+                            resultSet.getLong("id"),
+                            resultSet.getLong("role_id"),
+                            resultSet.getString("username"),
+                            resultSet.getString("password")
+                    );
+                }
                 log.debug("User was returned");
             } else {
                 log.warn("ResultSet is null");
@@ -163,6 +165,31 @@ public class UserDAO implements Dao<User>{
     }
 
     public boolean delete(User user) {
+        log.debug("Enter " + new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName());
+        try {
+            connection = connector.getConnection();
+            if (connection == null) {
+                log.debug("connection null");
+            }
+            preparedStatement = connection.prepareStatement(SQL_DELETE_USER_BY_ID);
+            preparedStatement.setLong(1, user.getId());
+            int rowsAffected =
+                    preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                log.debug("User was deleted");
+                return true;
+            } else {
+                log.warn("User wasn't deleted");
+            }
+        } catch (SQLException e) {
+            log.error("SQL exception (request or table failed): ", e);
+        } finally {
+            connector.closeStatement(preparedStatement);
+            connector.closeConnection();
+        }
         return false;
     }
 

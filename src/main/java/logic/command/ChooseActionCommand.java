@@ -24,7 +24,7 @@ public class ChooseActionCommand implements Command{
             log.debug("Redirect to " + page);
             return page;
         } else if (actionId.equals(2L)) {
-            page = ConfigurationManager.getProperty("path.page.createUser");
+            page = ConfigurationManager.getProperty("path.page.deleteUser");
             log.debug("Redirect to " + page);
             return page;
         } else if (actionId.equals(3L)) {

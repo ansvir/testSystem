@@ -26,6 +26,11 @@ public enum CommandEnum {
         {
             this.command = new ChooseActionCommand();
         }
+    },
+    CREATE_TEST {
+        {
+            this.command = new CreateTestCommand();
+        }
     };
 
     Command command;
