@@ -1,13 +1,11 @@
-package logic.command;
+package logic.command.tests;
 
-import dao.PermissionDAO;
 import dao.RoleDAO;
-import entity.Permission;
-import entity.Role;
+import dao.RoleUserDAO;
+import entity.RoleUser;
 import entity.User;
-import logic.CreateUserLogic;
-import logic.Define;
-import logic.LoginLogic;
+import logic.command.Command;
+import logic.logic.users.CreateUserLogic;
 import org.apache.log4j.Logger;
 import resource.ConfigurationManager;
 import resource.MessageManager;
@@ -15,19 +13,19 @@ import resource.MessageManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class CreateUserCommand implements Command {
+public class CreateTestAboutCommand implements Command {
 
-    private final static Logger log = Logger.getLogger(CreateUserCommand.class);
+    private final static Logger log = Logger.getLogger(CreateTestAboutCommand.class);
 
-    @Override
     public String execute(HttpServletRequest request, HttpSession session) {
-        log.debug("Enter CreateUserCommand execute method");
+        log.debug("Enter CreateTestMainCommand execute method");
         String page;
+
         Long roleId = Long.parseLong(request.getParameter("createUserRoleId"));
         String username = request.getParameter("createUserUsername");
         String password = request.getParameter("createUserPassword");
-        User user = new User(new RoleDAO().findById(roleId).getId(), username, password);
-        if (CreateUserLogic.createUser(user)) {
+        User user = new User(username, password);
+        if (CreateUserLogic.createUser(user, roleId)) {
             request.setAttribute("msg", MessageManager.getProperty("message.usercreatedsuccessfully"));
         } else {
             log.debug("user wasn't created");

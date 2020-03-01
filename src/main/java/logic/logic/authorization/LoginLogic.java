@@ -1,6 +1,7 @@
-package logic;
+package logic.logic.authorization;
 
 import dao.UserDAO;
+import entity.Permission;
 import entity.User;
 import org.apache.log4j.Logger;
 

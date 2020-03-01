@@ -2,7 +2,7 @@ package factory;
 
 import logic.command.Command;
 import logic.command.CommandEnum;
-import logic.command.EmptyCommand;
+import logic.command.redirect.EmptyCommand;
 import resource.MessageManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +14,9 @@ public class ActionFactory {
         if (action == null || action.isEmpty()) {
             return current;
         }
-
         try {
             CommandEnum currentEnum = CommandEnum.valueOf(action.toUpperCase());
-            current = currentEnum.getCurrentCommand();
+            current = currentEnum.getCommand();
         } catch (IllegalArgumentException e) {
             request.setAttribute("msg", action
                     + MessageManager.getProperty("message.wrongaction"));

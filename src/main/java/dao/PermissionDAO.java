@@ -8,19 +8,27 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PermissionDAO implements Dao<Permission>{
+public class PermissionDAO implements DAO<Permission> {
 
     private final static Logger log = Logger.getLogger(PermissionDAO.class);
 
     private final static String SQL_GET_ALL_PERMISSIONS = "SELECT * FROM permissions";
     private final static String SQL_GET_PERMISSION_BY_ID = "SELECT * FROM permissions WHERE id = ?";
     private final static String SQL_GET_PERMISSION_BY_NAME = "SELECT * FROM permissions WHERE name LIKE ?";
-    private final static String SQL_INSERT_PERMISSION = "INSERT INTO permissions (name, code) VALUES (?, ?)";
+    private final static String SQL_INSERT_PERMISSION = "INSERT INTO permissions (name, code, description) VALUES (?, ?, ?)";
     private final static String SQL_DELETE_PERMISSION_BY_ID = "DELETE FROM permissions WHERE id = ?";
     private final static String SQL_GET_PERMISSIONS_BY_ROLE_ID =
-            "SELECT p.id, p.name, p.code FROM permissions p, assigned_permissions ap, roles r " +
-            "WHERE p.id = ap.permission_id AND r.id = ap.role_id" +
+                    "SELECT p.* FROM permissions p, assigned_permissions ap, roles r " +
+                    "WHERE p.id = ap.permission_id AND r.id = ap.role_id" +
                     " AND r.id = ?";
+    private final static String SQL_GET_PERMISSIONS_BY_USERNAME =
+            "SELECT p.id, p.description, p.code, p.name " +
+                    "FROM permissions p, assigned_permissions ap, roles_users a, roles r, users u " +
+                    "WHERE p.id = ap.permission_id " +
+                    "AND r.id = ap.role_id " +
+                    "AND a.role_id = r.id " +
+                    "AND a.user_id = u.id " +
+                    "AND u.username = ?";
 
     private ConnectorDB connector;
     private Connection connection;
@@ -31,6 +39,7 @@ public class PermissionDAO implements Dao<Permission>{
         connector = ConnectorDB.getInstance();
     }
 
+    @Override
     public List<Permission> findAll() {
         log.debug("Enter " + new Object() {}
                 .getClass()
@@ -47,7 +56,8 @@ public class PermissionDAO implements Dao<Permission>{
                 Permission permission = new Permission(
                         resultSet.getLong("id"),
                         resultSet.getString("name"),
-                        resultSet.getString("code")
+                        resultSet.getString("code"),
+                        resultSet.getString("description")
                 );
                 permissions.add(permission);
             }
@@ -61,6 +71,7 @@ public class PermissionDAO implements Dao<Permission>{
         return permissions;
     }
 
+    @Override
     public Permission findById(Long id) {
         log.debug("Enter " + new Object() {}
                 .getClass()
@@ -77,7 +88,8 @@ public class PermissionDAO implements Dao<Permission>{
                 permission = new Permission(
                         resultSet.getLong("id"),
                         resultSet.getString("name"),
-                        resultSet.getString("code")
+                        resultSet.getString("code"),
+                        resultSet.getString("description")
                 );
                 log.debug("Permission was returned");
             } else {
@@ -92,6 +104,7 @@ public class PermissionDAO implements Dao<Permission>{
         return permission;
     }
 
+    @Override
     public Permission findByName(String name) {
         log.debug("Enter " + new Object() {}
                 .getClass()
@@ -112,7 +125,8 @@ public class PermissionDAO implements Dao<Permission>{
                     permission = new Permission(
                             resultSet.getLong("id"),
                             resultSet.getString("name"),
-                            resultSet.getString("code")
+                            resultSet.getString("code"),
+                            resultSet.getString("description")
                     );
                 }
                 log.debug("Permission was returned");
@@ -128,10 +142,12 @@ public class PermissionDAO implements Dao<Permission>{
         return permission;
     }
 
+    @Override
     public boolean update(Permission permission) {
         return false;
     }
 
+    @Override
     public boolean save(Permission permission) {
         log.debug("Enter " + new Object() {}
                 .getClass()
@@ -145,6 +161,7 @@ public class PermissionDAO implements Dao<Permission>{
             preparedStatement = connection.prepareStatement(SQL_INSERT_PERMISSION);
             preparedStatement.setString(1, permission.getName());
             preparedStatement.setString(2, permission.getCode());
+            preparedStatement.setString(3, permission.getDescription());
             int rowsAffected =
                     preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
@@ -183,7 +200,8 @@ public class PermissionDAO implements Dao<Permission>{
                     Permission permission = new Permission(
                             resultSet.getLong("id"),
                             resultSet.getString("name"),
-                            resultSet.getString("code")
+                            resultSet.getString("code"),
+                            resultSet.getString("description")
                     );
                     permissions.add(permission);
                 }
@@ -199,6 +217,46 @@ public class PermissionDAO implements Dao<Permission>{
         }
         return permissions;
     }
+
+    public List<Permission> findPermissionsByUsername(String username) {
+        log.debug("Enter " + new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName());
+        List<Permission> permissions = null;
+        try {
+            connection = connector.getConnection();
+            if (connection == null) {
+                log.debug("connection null");
+            }
+            preparedStatement = connection.prepareStatement(SQL_GET_PERMISSIONS_BY_USERNAME);
+            preparedStatement.setString(1, username);
+            permissions = new ArrayList<>();
+            ResultSet resultSet =
+                    preparedStatement.executeQuery();
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    Permission permission = new Permission(
+                            resultSet.getLong("id"),
+                            resultSet.getString("name"),
+                            resultSet.getString("code"),
+                            resultSet.getString("description")
+                    );
+                    permissions.add(permission);
+                }
+                log.debug("Permissions were returned " + permissions);
+            } else {
+                log.warn("ResultSet is null");
+            }
+        } catch (SQLException e) {
+            log.error("SQL exception (request or table failed): ", e);
+        } finally {
+            connector.closeStatement(preparedStatement);
+            connector.closeConnection();
+        }
+        return permissions;
+    }
+    @Override
     public boolean delete(Permission permission) {
         return false;
     }

@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link href="css/actionForm.css" rel="stylesheet"/>
+    <link href="../../css/actionForm.css" rel="stylesheet"/>
 </head>
 <body>
     <nav class="navbar navbar-expand navbar-dark bg-dark">
@@ -17,7 +17,7 @@
             </ul>
             <ul class="nav navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="login.jsp">logout</a>
+                    <a class="nav-link" href="../../login.jsp">logout</a>
                 </li>
             </ul>
         </div>
@@ -42,20 +42,20 @@
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Username&nbsp;</span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
                                 </div>
                                 <input type="text" name="createUserUsername" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default2">Password&nbsp;</span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default2">Password</span>
                                 </div>
                                 <input type="text" name="createUserPassword" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                             </div>
                             <br/>
                             <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="submit">submit</button>
                             <br/>
-                            <a class="btn btn-lg btn-primary btn-block" href="main.jsp">back</a>
+                            <a class="btn btn-lg btn-primary btn-block" href="../../main.jsp">back</a>
                         </div>
                     </div>
                 </div>

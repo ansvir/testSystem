@@ -1,8 +1,9 @@
-package logic.command;
+package logic.command.authorization;
 
+import dao.PermissionDAO;
 import entity.Permission;
-import logic.Define;
-import logic.LoginLogic;
+import logic.logic.authorization.LoginLogic;
+import logic.command.Command;
 import org.apache.log4j.Logger;
 import resource.ConfigurationManager;
 import resource.MessageManager;
@@ -24,9 +25,8 @@ public class LoginCommand implements Command {
             session.setAttribute("username", username);
             page = ConfigurationManager.getProperty("path.page.main");
             request.setAttribute("passedAuth", true);
-            Long roleId = Define.defineRoleIdByUsername(username);
-            List<Permission> definedPermissions = Define.definePermissionsByRoleId(roleId);
-            session.setAttribute("currentPermissions", definedPermissions);
+            List<Permission> permissions = new PermissionDAO().findPermissionsByUsername(username);
+            session.setAttribute("currentPermissions", permissions);
         } else {
             log.debug("credentials are incorrect");
             request.setAttribute("passedAuth", false);

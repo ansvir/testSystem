@@ -1,26 +1,27 @@
 package entity;
 
-public class Permission {
+import java.sql.Time;
 
+public class Test {
     private Long id;
     private String name;
-    private String code;
     private String description;
+    private Time time;
 
-    public Permission(Long id, String name, String code, String description) {
+    public Test(Long id, String name, String description, Time time) {
         this.id = id;
         this.name = name;
-        this.code = code;
         this.description = description;
+        this.time = time;
     }
 
-    public Permission(String name, String code, String description) {
+    public Test(String name, String description, Time time) {
         this.name = name;
-        this.code = code;
         this.description = description;
+        this.time = time;
     }
 
-    public Permission() {
+    public Test() {
     }
 
     public Long getId() {
@@ -39,14 +40,6 @@ public class Permission {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -55,13 +48,21 @@ public class Permission {
         this.description = description;
     }
 
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
-        return "Permission{" +
+        return "Test{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", code='" + code + '\'' +
                 ", description='" + description + '\'' +
+                ", time=" + time +
                 '}';
     }
 }

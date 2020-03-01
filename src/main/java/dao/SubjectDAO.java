@@ -1,88 +1,83 @@
 package dao;
 
 import database.ConnectorDB;
-import entity.User;
+import entity.Subject;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO implements DAO<User> {
+public class SubjectDAO implements DAO<Subject> {
 
-    private final static Logger log = Logger.getLogger(UserDAO.class);
+    private final static Logger log = Logger.getLogger(SubjectDAO.class);
 
-    private final static String SQL_GET_ALL_USERS = "SELECT * FROM users";
-    private final static String SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
-    private final static String SQL_GET_USER_BY_USERNAME = "SELECT * FROM users WHERE username LIKE ?";
-    private final static String SQL_INSERT_USER = "INSERT INTO users (username, password) VALUES (?, ?)";
-    private final static String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
-    private final static String SQL_GET_ALL_USERS_AND_ROLES =
-            "SELECT u.id, u.username, u.password, r.name "
-            + "FROM users u, roles r, roles_users ru "
-            + "WHERE ru.role_id = r.id AND ru.user_id = u.id";
+    private final static String SQL_GET_ALL_SUBJECTS = "SELECT * FROM subjects";
+    private final static String SQL_GET_SUBJECT_BY_ID = "SELECT * FROM subjects WHERE id = ?";
+    private final static String SQL_GET_SUBJECT_BY_SUBJECT_NAME = "SELECT * FROM subjects WHERE name LIKE ?";
+    private final static String SQL_INSERT_SUBJECT = "INSERT INTO users (name, description) VALUES (?, ?)";
+    private final static String SQL_DELETE_SUBJECT_BY_ID = "DELETE FROM subjects WHERE id = ?";
 
     private ConnectorDB connector;
     private Connection connection;
     private Statement statement;
     private PreparedStatement preparedStatement;
 
-    public UserDAO() {
+    public SubjectDAO() {
         connector = ConnectorDB.getInstance();
     }
 
     @Override
-    public List<User> findAll() {
+    public List<Subject> findAll() {
         log.debug("Enter " + new Object() {}
                 .getClass()
                 .getEnclosingMethod()
                 .getName());
-        List<User> users = new ArrayList<>();
+        List<Subject> subjects = new ArrayList<>();
         try {
             connection = connector.getConnection();
             statement = connection.createStatement();
             ResultSet resultSet =
-                    statement.executeQuery(SQL_GET_ALL_USERS);
+                    statement.executeQuery(SQL_GET_ALL_SUBJECTS);
             while (resultSet.next()) {
-                User user = new User(
+                Subject subject = new Subject(
                         resultSet.getLong("id"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password")
-                );
-                users.add(user);
+                        resultSet.getString("name"),
+                        resultSet.getString("description"));
+                subjects.add(subject);
             }
-            log.debug("Users were returned");
+            log.debug("Subjects were returned");
         } catch (SQLException e) {
             log.error("SQL exception (request or table failed): ", e);
         } finally {
             connector.closeStatement(statement);
             connector.closeConnection();
         }
-        return users;
+        return subjects;
     }
 
     @Override
-    public User findById(Long id) {
+    public Subject findById(Long id) {
         log.debug("Enter " + new Object() {}
                 .getClass()
                 .getEnclosingMethod()
                 .getName());
-        User user = null;
+        Subject subject = null;
         try {
             connection = connector.getConnection();
-            preparedStatement = connection.prepareStatement(SQL_GET_USER_BY_ID);
+            preparedStatement = connection.prepareStatement(SQL_GET_SUBJECT_BY_ID);
             preparedStatement.setLong(1, id);
             ResultSet resultSet =
                     preparedStatement.executeQuery();
             if (resultSet != null) {
                 while (resultSet.next()) {
-                    user = new User(
+                    subject = new Subject(
                             resultSet.getLong("id"),
-                            resultSet.getString("username"),
-                            resultSet.getString("password")
+                            resultSet.getString("name"),
+                            resultSet.getString("description")
                     );
                 }
-                log.debug("User was returned");
+                log.debug("Subject was returned");
             } else {
                 log.warn("ResultSet is null");
             }
@@ -92,34 +87,34 @@ public class UserDAO implements DAO<User> {
             connector.closeStatement(preparedStatement);
             connector.closeConnection();
         }
-        return user;
+        return subject;
     }
 
     @Override
-    public User findByName(String username) {
+    public Subject findByName(String name) {
         log.debug("Enter " + new Object() {}
                 .getClass()
                 .getEnclosingMethod()
                 .getName());
-        User user = null;
+        Subject subject = null;
         try {
             connection = connector.getConnection();
             if (connection == null) {
                 log.debug("connection null");
             }
-            preparedStatement = connection.prepareStatement(SQL_GET_USER_BY_USERNAME);
-            preparedStatement.setString(1, username);
+            preparedStatement = connection.prepareStatement(SQL_GET_SUBJECT_BY_SUBJECT_NAME);
+            preparedStatement.setString(1, name);
             ResultSet resultSet =
                     preparedStatement.executeQuery();
             if (resultSet != null) {
                 while (resultSet.next()) {
-                    user = new User(
+                    subject = new Subject(
                             resultSet.getLong("id"),
-                            resultSet.getString("username"),
-                            resultSet.getString("password")
+                            resultSet.getString("name"),
+                            resultSet.getString("description")
                     );
                 }
-                log.debug("User was returned");
+                log.debug("Subject was returned");
             } else {
                 log.warn("ResultSet is null");
             }
@@ -129,16 +124,16 @@ public class UserDAO implements DAO<User> {
             connector.closeStatement(preparedStatement);
             connector.closeConnection();
         }
-        return user;
+        return subject;
     }
 
     @Override
-    public boolean update(User user) {
+    public boolean update(Subject subject) {
         return false;
     }
 
     @Override
-    public boolean save(User user) {
+    public boolean save(Subject subject) {
         log.debug("Enter " + new Object() {}
                 .getClass()
                 .getEnclosingMethod()
@@ -148,16 +143,16 @@ public class UserDAO implements DAO<User> {
             if (connection == null) {
                 log.debug("connection null");
             }
-            preparedStatement = connection.prepareStatement(SQL_INSERT_USER);
-            preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getPassword());
+            preparedStatement = connection.prepareStatement(SQL_INSERT_SUBJECT);
+            preparedStatement.setString(1, subject.getName());
+            preparedStatement.setString(2, subject.getDescription());
             int rowsAffected =
                     preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
-                log.debug("User was saved");
+                log.debug("Subject was saved");
                 return true;
             } else {
-                log.warn("User wasn't saved");
+                log.warn("Subject wasn't saved");
             }
         } catch (SQLException e) {
             log.error("SQL exception (request or table failed): ", e);
@@ -169,7 +164,7 @@ public class UserDAO implements DAO<User> {
     }
 
     @Override
-    public boolean delete(User user) {
+    public boolean delete(Subject subject) {
         log.debug("Enter " + new Object() {}
                 .getClass()
                 .getEnclosingMethod()
@@ -179,15 +174,15 @@ public class UserDAO implements DAO<User> {
             if (connection == null) {
                 log.debug("connection null");
             }
-            preparedStatement = connection.prepareStatement(SQL_DELETE_USER_BY_ID);
-            preparedStatement.setLong(1, user.getId());
+            preparedStatement = connection.prepareStatement(SQL_DELETE_SUBJECT_BY_ID);
+            preparedStatement.setLong(1, subject.getId());
             int rowsAffected =
                     preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
-                log.debug("User was deleted");
+                log.debug("Subject was deleted");
                 return true;
             } else {
-                log.warn("User wasn't deleted");
+                log.warn("Subject wasn't deleted");
             }
         } catch (SQLException e) {
             log.error("SQL exception (request or table failed): ", e);
@@ -196,37 +191,5 @@ public class UserDAO implements DAO<User> {
             connector.closeConnection();
         }
         return false;
-    }
-    public List<Object[]> findAllUsersAndRoles() {
-        log.debug("Enter " + new Object() {}
-                .getClass()
-                .getEnclosingMethod()
-                .getName());
-        List<Object[]> rows = new ArrayList<>();
-        try {
-            connection = connector.getConnection();
-            statement = connection.createStatement();
-            ResultSet resultSet =
-                    statement.executeQuery(SQL_GET_ALL_USERS_AND_ROLES);
-            if (resultSet != null) {
-                while (resultSet.next()) {
-                        rows.add(new Object[]{
-                                resultSet.getString(1),
-                                resultSet.getString(2),
-                                resultSet.getString(3),
-                                resultSet.getString(4)
-                        });
-                        log.debug("Row was returned");
-                    }
-            } else {
-                log.warn("ResultSet is null");
-            }
-        } catch (SQLException e) {
-            log.error("SQL exception (request or table failed): ", e);
-        } finally {
-            connector.closeStatement(preparedStatement);
-            connector.closeConnection();
-        }
-        return rows;
     }
 }

@@ -1,5 +1,6 @@
-package logic;
+package logic.logic.users;
 
+import dao.RoleUserDAO;
 import dao.UserDAO;
 import entity.User;
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ public class DeleteUserLogic {
 
     public static boolean deleteUser(User user) {
         log.debug("Enter DeleteUserLogic createUser method");
-        return new UserDAO().delete(user);
+        return new RoleUserDAO().deleteByUserId(user.getId())
+                && new UserDAO().delete(user);
     }
 }

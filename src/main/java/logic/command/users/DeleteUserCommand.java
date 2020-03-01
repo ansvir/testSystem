@@ -1,9 +1,8 @@
-package logic.command;
+package logic.command.users;
 
-import dao.RoleDAO;
 import dao.UserDAO;
-import entity.User;
-import logic.DeleteUserLogic;
+import logic.logic.users.DeleteUserLogic;
+import logic.command.Command;
 import org.apache.log4j.Logger;
 import resource.ConfigurationManager;
 import resource.MessageManager;
@@ -23,9 +22,11 @@ public class DeleteUserCommand implements Command {
         log.debug("Trying to delete user with id " + userId);
         if (DeleteUserLogic.deleteUser(new UserDAO().findById(userId))) {
             request.setAttribute("msg", MessageManager.getProperty("message.userdeletedsuccessfully"));
+            request.setAttribute("operationSuccess", true);
         } else {
             log.debug("user wasn't deleted");
             request.setAttribute("msg", MessageManager.getProperty("message.errordeleteuser"));
+            request.setAttribute("operationSuccess", false);
         }
         page = ConfigurationManager.getProperty("path.page.main");
         return page;

@@ -1,5 +1,6 @@
-package logic.command;
+package logic.command.authorization;
 
+import logic.command.Command;
 import org.apache.log4j.Logger;
 import resource.ConfigurationManager;
 

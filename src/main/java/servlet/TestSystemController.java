@@ -1,6 +1,8 @@
 package servlet;
 
 import dao.RoleDAO;
+import dao.SubjectDAO;
+import dao.TestDAO;
 import dao.UserDAO;
 import factory.ActionFactory;
 import logic.command.Command;
@@ -16,15 +18,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class Controller extends HttpServlet {
+public class TestSystemController extends HttpServlet {
 
-    private final static Logger log = Logger.getLogger(Controller.class);
+    private final static Logger log = Logger.getLogger(TestSystemController.class);
 
+    @Override
+    public void init() {
+        
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         processRequest(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
@@ -37,10 +47,14 @@ public class Controller extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("roles", new RoleDAO().findAll());
         session.setAttribute("users", new UserDAO().findAll());
-        String page;
+        session.setAttribute("subjects", new SubjectDAO().findAll());
+        session.setAttribute("tests", new TestDAO().findAll());
+        request.setAttribute("operationSuccess", null);
+        session.setAttribute("viewUsers", new UserDAO().findAllUsersAndRoles());
+
         ActionFactory client = new ActionFactory();
         Command command = client.defineCommand(request);
-        page = command.execute(request, session);
+        String page = command.execute(request, session);
         if (page != null) {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
             dispatcher.forward(request, response);

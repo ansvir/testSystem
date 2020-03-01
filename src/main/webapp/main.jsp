@@ -32,12 +32,22 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5 text-center">
-                        <h1 class="h2">Hello, ${sessionScope.username}</h1>
+                        <h2 class="h2">Hello, ${sessionScope.username}</h2>
+                        <c:if test="${not empty requestScope.operationSuccess}">
+                            <c:choose>
+                                <c:when test="${requestScope.operationSuccess}">
+                                    <div class="alert alert-success mt-5">${requestScope.msg}</div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="alert alert-danger mt-5">${requestScope.msg}</div>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
                     </div>
                     <div class="col-lg-7 card card-body bg-light">
                         <c:forEach items="${sessionScope.currentPermissions}" var="item">
                             <div>
-                                <button class="btn btn-primary btn-block" name="actionId" value="${item.id}">${item.name}</button>
+                                <button class="btn btn-primary btn-block" name="actionCode" value="${item.code}">${item.name}</button>
                                 <br/>
                             </div>
                         </c:forEach>
@@ -45,7 +55,6 @@
                 </div>
             </div>
         </form>
-        <div class="text-center">${requestScope.msg}</div>
     </div>
 </body>
 
