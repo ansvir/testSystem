@@ -17,7 +17,7 @@
             </ul>
             <ul class="nav navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="../../login.jsp">logout</a>
+                    <a class="nav-link" href="../login.jsp">logout</a>
                 </li>
             </ul>
         </div>
@@ -55,7 +55,7 @@
                             <br/>
                             <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="submit">submit</button>
                             <br/>
-                            <a class="btn btn-lg btn-primary btn-block" href="../../main.jsp">back</a>
+                            <a class="btn btn-lg btn-primary btn-block" href="../main.jsp">back</a>
                         </div>
                     </div>
                 </div>

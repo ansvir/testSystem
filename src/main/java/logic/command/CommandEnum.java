@@ -6,7 +6,6 @@ import logic.command.main.ChooseActionCommand;
 import logic.command.tests.CreateTestAboutCommand;
 import logic.command.tests.ViewTestsCommand;
 import logic.command.tests.show.ChooseCriteriaCommand;
-import logic.command.users.AddQuestionCommand;
 import logic.command.users.CreateUserCommand;
 import logic.command.users.DeleteUserCommand;
 
@@ -30,9 +29,9 @@ public enum CommandEnum {
         }
     },
 
-    CREATE_TEST_ADD_QUESTION {
+    CREATE_TEST_ABOUT {
         {
-            this.command = new AddQuestionCommand();
+            this.command = new CreateTestAboutCommand();
         }
     },
 
@@ -63,12 +62,6 @@ public enum CommandEnum {
     CHOOSE_TESTS_CRITERIA {
         {
             this.command = new ChooseCriteriaCommand();
-        }
-    },
-
-    ADD_QUESTION {
-        {
-            this.command = new AddQuestionCommand();
         }
     };
 

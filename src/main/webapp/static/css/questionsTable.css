@@ -1,0 +1,18 @@
+.questions-column {
+    width:30%;
+    text-align:center;
+}
+
+.answers-column {
+    width:50%;
+    text-align:center;
+}
+
+.check-column {
+    width:10%;
+    text-align: center;
+}
+
+.delete-column {
+    width:10%;
+}

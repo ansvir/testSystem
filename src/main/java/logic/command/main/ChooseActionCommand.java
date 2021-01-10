@@ -23,53 +23,13 @@ public class ChooseActionCommand implements Command {
                 log.debug("Redirect to " + page);
                 return page;
             }
-            case "du": {
-                page = ConfigurationManager.getProperty("path.page.users.deleteUser");
+            case "createtest": {
+                page = ConfigurationManager.getProperty("path.page.tests.createTestAbout");
                 log.debug("Redirect to " + page);
                 return page;
             }
-            case "dat": {
-                page = ConfigurationManager.getProperty("path.page.users.createUser");
-                log.debug("Redirect to " + page);
-                return page;
-            }
-            case "t": {
-                page = ConfigurationManager.getProperty("path.page.users.createTestAbout");
-                log.debug("Redirect to " + page);
-                return page;
-            }
-            case "d": {
-                page = ConfigurationManager.getProperty("path.page.users.createUser");
-                log.debug("Redirect to " + page);
-                return page;
-            }
-            case "take": {
-                page = ConfigurationManager.getProperty("path.page.tests.take.chooseCriteria");
-                log.debug("Redirect to " + page);
-                return page;
-            }
-            case "st": {
-                page = ConfigurationManager.getProperty("path.page.users.createUser");
-                log.debug("Redirect to " + page);
-                return page;
-            }
-            case "st2": {
-                page = ConfigurationManager.getProperty("path.page.users.createUser");
-                log.debug("Redirect to " + page);
-                return page;
-            }
-            case "vt": {
-                page = ConfigurationManager.getProperty("path.page.test.view");
-                log.debug("Redirect to " + page);
-                return page;
-            }
-            case "aq": {
-                page = ConfigurationManager.getProperty("path.page.tests.addQuestion");
-                log.debug("Redirect to " + page);
-                return page;
-            }
-            case "vu": {
-                page = ConfigurationManager.getProperty("path.page.users.view");
+            case "tat": {
+                page = ConfigurationManager.getProperty("path.page.users.takeTestAbout");
                 log.debug("Redirect to " + page);
                 return page;
             }

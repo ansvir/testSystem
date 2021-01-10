@@ -12,11 +12,11 @@ public class SubjectDAO implements DAO<Subject> {
 
     private final static Logger log = Logger.getLogger(SubjectDAO.class);
 
-    private final static String SQL_GET_ALL_SUBJECTS = "SELECT * FROM subjects";
-    private final static String SQL_GET_SUBJECT_BY_ID = "SELECT * FROM subjects WHERE id = ?";
-    private final static String SQL_GET_SUBJECT_BY_SUBJECT_NAME = "SELECT * FROM subjects WHERE name LIKE ?";
-    private final static String SQL_INSERT_SUBJECT = "INSERT INTO users (name, description) VALUES (?, ?)";
-    private final static String SQL_DELETE_SUBJECT_BY_ID = "DELETE FROM subjects WHERE id = ?";
+    private final static String SQL_GET_ALL_SUBJECTS = "SELECT * FROM subject";
+    private final static String SQL_GET_SUBJECT_BY_ID = "SELECT * FROM subject WHERE id = ?";
+    private final static String SQL_GET_SUBJECT_BY_SUBJECT_NAME = "SELECT * FROM subject WHERE name LIKE ?";
+    private final static String SQL_INSERT_SUBJECT = "INSERT INTO subject (name, description) VALUES (?, ?)";
+    private final static String SQL_DELETE_SUBJECT_BY_ID = "DELETE FROM subject WHERE id = ?";
 
     private ConnectorDB connector;
     private Connection connection;

@@ -12,14 +12,14 @@ public class RoleDAO implements DAO<Role> {
 
     private final static Logger log = Logger.getLogger(RoleDAO.class);
 
-    private final static String SQL_GET_ALL_ROLES = "SELECT * FROM roles";
-    private final static String SQL_GET_ROLE_BY_ID = "SELECT * FROM roles WHERE id = ?";
-    private final static String SQL_GET_ROLE_BY_NAME = "SELECT * FROM roles WHERE name LIKE ?";
+    private final static String SQL_GET_ALL_ROLES = "SELECT * FROM role";
+    private final static String SQL_GET_ROLE_BY_ID = "SELECT * FROM role WHERE id = ?";
+    private final static String SQL_GET_ROLE_BY_NAME = "SELECT * FROM role WHERE name LIKE ?";
     private final static String SQL_INSERT_USER = "INSERT INTO roles (name) VALUES (?)";
     private final static String SQL_DELETE_USER_BY_ID = "DELETE FROM roles WHERE id = ?";
     private final static String SQL_GET_ROLE_BY_USERNAME =
                     "SELECT r.* \n" +
-                    "FROM users u, roles r, roles_users ru \n" +
+                    "FROM users u, role r, roles_users ru \n" +
                     "WHERE ru.user_id = u.id \n" +
                     "  AND ru.role_id = r.id \n" +
                     "  AND u.username LIKE ?";

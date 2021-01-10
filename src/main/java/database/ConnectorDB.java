@@ -40,7 +40,7 @@ public class ConnectorDB {
             }
             return connection;
         } catch (SQLException e) {
-            log.error("error while connecting to " + url);
+            log.error("error while connecting to " + url, e);
         } catch (MissingResourceException e) {
             log.error("properties file is missing ", e);
         }

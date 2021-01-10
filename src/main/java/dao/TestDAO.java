@@ -12,11 +12,11 @@ public class TestDAO implements DAO<Test> {
 
     private final static Logger log = Logger.getLogger(SubjectDAO.class);
 
-    private final static String SQL_GET_ALL_TESTS = "SELECT * FROM tests";
-    private final static String SQL_GET_TESTS_BY_ID = "SELECT * FROM tests WHERE id = ?";
-    private final static String SQL_GET_TESTS_BY_TEST_NAME = "SELECT * FROM tests WHERE name LIKE ?";
-    private final static String SQL_INSERT_TEST = "INSERT INTO tests (name, description, time) VALUES (?, ?, ?)";
-    private final static String SQL_DELETE_TEST_BY_ID = "DELETE FROM tests WHERE id = ?";
+    private final static String SQL_GET_ALL_TESTS = "SELECT * FROM test";
+    private final static String SQL_GET_TESTS_BY_ID = "SELECT * FROM test WHERE id = ?";
+    private final static String SQL_GET_TESTS_BY_TEST_NAME = "SELECT * FROM test WHERE name LIKE ?";
+    private final static String SQL_INSERT_TEST = "INSERT INTO test (name, description, time) VALUES (?, ?, ?)";
+    private final static String SQL_DELETE_TEST_BY_ID = "DELETE FROM test WHERE id = ?";
 
     private ConnectorDB connector;
     private Connection connection;

@@ -22,7 +22,7 @@
         </ul>
         <ul class="nav navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="../../../login.jsp">logout</a>
+                <a class="nav-link" href="../../login.jsp">logout</a>
             </li>
         </ul>
     </div>

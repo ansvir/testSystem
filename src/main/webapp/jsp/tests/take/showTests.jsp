@@ -73,7 +73,7 @@
         </ul>
         <ul class="nav navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="../../../login.jsp">logout</a>
+                <a class="nav-link" href="../../login.jsp">logout</a>
             </li>
         </ul>
     </div>
@@ -113,7 +113,7 @@
                     <br/>
                     <a class="btn btn-lg btn-primary btn-block" href="chooseCriteria.jsp">back</a>
                     <br/>
-                    <a class="btn btn-lg btn-primary btn-block" href="../../../main.jsp">to menu</a>
+                    <a class="btn btn-lg btn-primary btn-block" href="../../main.jsp">to menu</a>
                 </div>
             </div>
         </div>

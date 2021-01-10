@@ -12,18 +12,18 @@ public class PermissionDAO implements DAO<Permission> {
 
     private final static Logger log = Logger.getLogger(PermissionDAO.class);
 
-    private final static String SQL_GET_ALL_PERMISSIONS = "SELECT * FROM permissions";
-    private final static String SQL_GET_PERMISSION_BY_ID = "SELECT * FROM permissions WHERE id = ?";
-    private final static String SQL_GET_PERMISSION_BY_NAME = "SELECT * FROM permissions WHERE name LIKE ?";
-    private final static String SQL_INSERT_PERMISSION = "INSERT INTO permissions (name, code, description) VALUES (?, ?, ?)";
+    private final static String SQL_GET_ALL_PERMISSIONS = "SELECT * FROM permission";
+    private final static String SQL_GET_PERMISSION_BY_ID = "SELECT * FROM permission WHERE id = ?";
+    private final static String SQL_GET_PERMISSION_BY_NAME = "SELECT * FROM permission WHERE name LIKE ?";
+    private final static String SQL_INSERT_PERMISSION = "INSERT INTO permission (name, code, description) VALUES (?, ?, ?)";
     private final static String SQL_DELETE_PERMISSION_BY_ID = "DELETE FROM permissions WHERE id = ?";
     private final static String SQL_GET_PERMISSIONS_BY_ROLE_ID =
-                    "SELECT p.* FROM permissions p, assigned_permissions ap, roles r " +
+                    "SELECT p.* FROM permission p, permissions_roles ap, role r " +
                     "WHERE p.id = ap.permission_id AND r.id = ap.role_id" +
                     " AND r.id = ?";
     private final static String SQL_GET_PERMISSIONS_BY_USERNAME =
             "SELECT p.id, p.description, p.code, p.name " +
-                    "FROM permissions p, assigned_permissions ap, roles_users a, roles r, users u " +
+                    "FROM permission p, permissions_roles ap, roles_users a, role r, user u " +
                     "WHERE p.id = ap.permission_id " +
                     "AND r.id = ap.role_id " +
                     "AND a.role_id = r.id " +

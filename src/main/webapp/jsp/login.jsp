@@ -2,7 +2,7 @@
 <head>
     <title>Test system: login</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/signin.css" rel="stylesheet">
+    <link href="../static/css/actionForm.css" rel="stylesheet"/>
 </head>
 
 <body class="text-center">
@@ -10,9 +10,9 @@
         <h1 class="h3 mb-3 font-weight-normal">Welcome!</h1>
         <form class="form-signin" name="authForm" action="testSystem" method="POST">
             <input type="hidden" name="command" value="login" />
-            Username <input class="form-control" name="username" type="text"/>
+            <label for="username">Username<input id="username" class="form-control" name="username" type="text"/></label>
             <br/>
-            Password <input class="form-control" name="password" type="password"/>
+            <label for="password">Password<input id="password" class="form-control" name="password" type="password"/></label>
             <br/>
             <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="submit">submit</button>
         </form>

@@ -12,14 +12,14 @@ public class UserDAO implements DAO<User> {
 
     private final static Logger log = Logger.getLogger(UserDAO.class);
 
-    private final static String SQL_GET_ALL_USERS = "SELECT * FROM users";
-    private final static String SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
-    private final static String SQL_GET_USER_BY_USERNAME = "SELECT * FROM users WHERE username LIKE ?";
-    private final static String SQL_INSERT_USER = "INSERT INTO users (username, password) VALUES (?, ?)";
-    private final static String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?";
+    private final static String SQL_GET_ALL_USERS = "SELECT * FROM user";
+    private final static String SQL_GET_USER_BY_ID = "SELECT * FROM user WHERE id = ?";
+    private final static String SQL_GET_USER_BY_USERNAME = "SELECT * FROM user WHERE username LIKE ?";
+    private final static String SQL_INSERT_USER = "INSERT INTO user (username, password) VALUES (?, ?)";
+    private final static String SQL_DELETE_USER_BY_ID = "DELETE FROM user WHERE id = ?";
     private final static String SQL_GET_ALL_USERS_AND_ROLES =
             "SELECT u.id, u.username, u.password, r.name "
-            + "FROM users u, roles r, roles_users ru "
+            + "FROM user u, role r, roles_users ru "
             + "WHERE ru.role_id = r.id AND ru.user_id = u.id";
 
     private ConnectorDB connector;
